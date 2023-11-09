@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ccc;
+      }
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+    </style>
+    <title>Document</title>
+  </head>
+  <body>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" />
+    <label for="email">Email:</label>
+    <input type="email" id="correo" />
+    <button id="anadeTabla">AñadeTabla</button>
+    <button id="boton">Guarda</button>
+    <button id="boton2">Obten Todo</button>
+    <button id="buscar">Busca</button>
+    <table id="table"></table>
+
+    <script src="./js/pruebaFetch.js" type="module"></script>
+  </body>
+</html>
