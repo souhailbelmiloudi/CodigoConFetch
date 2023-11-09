@@ -10,7 +10,12 @@ export const GetAlldatos = async (url, tabla) => {
     }
   } catch (error) {
     let message = error.statusText || "Ocurrio un Error";
-    console.log(`${error.status}: ${message}`);
+    let status = error.status || "";
+    Swal.fire({
+      icon: `error`,
+      title: `${status} ${message}`,
+      text: "Asegúrate de que la API esté en funcionamiento y disponible en este momento.",
+    });
   }
 };
 
@@ -26,7 +31,12 @@ export const Getdatos = async (url, tabla, campo, valor) => {
     }
   } catch (error) {
     let message = error.statusText || "Ocurrio un Error";
-    console.log(`${error.status}: ${message}`);
+    let status = error.status || "";
+    Swal.fire({
+      icon: `error`,
+      title: `${status} ${message}`,
+      text: "Asegúrate de que la API esté en funcionamiento y disponible en este momento.",
+    });
   }
 };
 
@@ -46,6 +56,11 @@ export const PostDatos = async (url, tabla, datos) => {
     }
   } catch (error) {
     let message = error.statusText || "Ocurrio un Error";
-    console.log(`${error.status}: ${message}`);
+    let status = error.status || "";
+    Swal.fire({
+      icon: `error`,
+      title: `${status} ${message}`,
+      text: "Asegúrate de que la API esté en funcionamiento y disponible en este momento.",
+    });
   }
 };
