@@ -1,61 +1,70 @@
 import { GetAlldatos, PostDatos, Getdatos } from "./crudFetch.js";
 
-const url = "http://localhost:2020";
-const tabla = "conceptos";
+const baseURL = "http://localhost:2020";
+const table = "conceptos";
 
-const botonGuarda = document.getElementById("boton");
-const botonObten = document.getElementById("boton2");
-const nombre = document.getElementById("nombre");
-const anadeTabla = document.getElementById("anadeTabla");
-const correo = document.getElementById("correo");
-const tableform = document.getElementById("table");
-const buscar = document.getElementById("buscar");
-let datosForm = [
-  /*nombre: "souhail",
-    email: "souhail@gmail.com",*/
-];
+const botonAgregar = document.getElementById("boton");
+const botonObtener = document.getElementById("boton2");
+const inputNombre = document.getElementById("nombre");
+const inputCorreo = document.getElementById("correo");
+const tablaElemento = document.getElementById("table");
+const botonBuscar = document.getElementById("buscar");
 
-const cabeceraTable = () => {
-  tableform.innerHTML = ` 
-  <tr>
-  <th>Nombre</th>
-  <th>Email</th>
-  </tr>`;
+let datosFormulario = [];
+
+const CabeceraTabla = () => {
+  tablaElemento.innerHTML = `
+    <tr>
+      <th>Nombre</th>
+      <th>Email</th>
+    </tr>`;
 };
 
-//obtener datos con fetch
-botonObten.addEventListener("click", async () => {
-  const res = await GetAlldatos(url, tabla);
-  cabeceraTable();
-  res.map((el) => {
-    let tr = document.createElement("tr");
-    tr.innerHTML = `<td>${el.nombre}</td>
-    <td>${el.email}</td>`;
-    tableform.append(tr);
-  });
-});
-//añadir un objeto a la lista
-anadeTabla.addEventListener("click", (e) => {
-  datosForm.push({
-    nombre: nombre.value,
-    email: correo.value,
-  });
-});
+const FilaTabla = (datos) => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${datos.nombre}</td>
+    <td>${datos.email}</td>`;
+  tablaElemento.appendChild(tr);
+};
 
-botonGuarda.addEventListener("click", (e) => {
-  datosForm.map((el) => PostDatos(url, tabla, el));
-});
+const obtenerDatos = async () => {
+  try {
+    const datosResponse = await GetAlldatos(baseURL, table);
+    CabeceraTabla();
+    datosResponse.forEach((datos) => FilaTabla(datos));
+  } catch (error) {
+    console.log("Error al obtener datos:", error);
+  }
+};
 
-buscar.addEventListener("click", async () => {
-  const resultado = await Getdatos(url, tabla, "nombre", nombre.value);
-  cabeceraTable();
-  resultado.map((el) => {
-    let tr = document.createElement("tr");
-
-    tr.innerHTML = `
-  
-    <td>${el.nombre}</td>
-        <td>${el.email}</td>`;
-    tableform.append(tr);
+const agregarDatosALista = () => {
+  datosFormulario.push({
+    nombre: inputNombre.value,
+    email: inputCorreo.value,
   });
-});
+};
+
+const guardarDatos = () => {
+  datosFormulario.forEach((datos) => PostDatos(baseURL, table, datos));
+};
+
+const buscarDatos = async () => {
+  try {
+    const resultado = await Getdatos(
+      baseURL,
+      table,
+      "nombre",
+      inputNombre.value
+    );
+    CabeceraTabla();
+    resultado.forEach((datos) => FilaTabla(datos));
+  } catch (error) {
+    console.log("Error al buscar datos:", error);
+  }
+};
+
+botonObtener.addEventListener("click", obtenerDatos);
+botonAgregar.addEventListener("click", agregarDatosALista);
+botonAgregar.addEventListener("click", guardarDatos);
+botonBuscar.addEventListener("click", buscarDatos);
